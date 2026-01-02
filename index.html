@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>마하나임 목장 발표</title>
+
+  <!-- Noto Sans KR -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Noto Sans KR', '맑은 고딕', sans-serif;
+      min-height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #eef2f7, #f9f9f9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      background: #ffffff;
+      width: 520px;
+      padding: 50px 40px;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 34px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #1f3c88;
+    }
+
+    .subtitle {
+      font-size: 17px;
+      color: #666;
+      margin-bottom: 35px;
+    }
+
+    .input-wrap {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    input {
+      padding: 14px;
+      font-size: 18px;
+      width: 220px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      outline: none;
+    }
+
+    button {
+      padding: 14px 22px;
+      font-size: 18px;
+      border-radius: 10px;
+      border: none;
+      background: #1f3c88;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    #result {
+      margin-top: 40px;
+      padding: 30px 20px;
+      border-radius: 15px;
+      background: #f4f6fa;
+      min-height: 90px;
+      font-size: 24px;
+      color: #2c3e50;
+    }
+
+    /* 애니메이션 */
+    .fade-in {
+      animation: fadeUp 0.6s ease-out;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .leader {
+      margin-top: 12px;
+      font-size: 22px;
+      font-weight: 700;
+      color: #1f3c88;
+      opacity: 0;
+      animation: fadeUp 0.6s ease-out forwards;
+      animation-delay: 0.6s;
+    }
+
+    .notice {
+      font-size: 20px;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>마하나임 목장 발표</h1>
+    <div class="subtitle">이름을 입력해주세요</div>
+
+    <div class="input-wrap">
+      <input type="text" id="nameInput" placeholder="이름 입력">
+      <button onclick="checkGroup()">확인</button>
+    </div>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+    const groups = {
+      "화평": { leader: "유나현", members: ["유나현","이현경","양지수","이충섭","장효찬","이재은","이영재","이강민","신효근","남예은","김지원","정지운", ] },
+      "희락": { leader: "박지민", members: ["박지민","안희진","이은서","남재형","김소망","최세현","이현희","이형섭","이주안","박철언","홍신형","박지웅","정성훈",] },
+      "사랑": { leader: "김민서", members: ["김민서","유동균","석중권","이준원","정다은","윤하원","김은찬","여지민","이민선","이화평","최민하","임지철","최성민",] },
+      "충성": { leader: "배광현", members: ["배광현","이영민","김효식","김진수","김도훈","김대영","남창형","심헌","서동성",] },
+      "절제": { leader: "김현성", members: ["김현성","한수향","김영민","김하경","이민후","황호산","정은진","장재완","정동하","조수민","김주현",] },
+      "인내": { leader: "박수정", members: ["박수정","이온유","윤철희","서온유","이지훈","전상현","박중빈","이노센트","오기은","박지찬","심상은","송하준","박지은",] },
+      "온유": { leader: "송주리", members: ["송주리","유서영","심혜단","김하종","황혜진","고은비","이신우","이하경","최민서","이창민","장재익","남영은","박수범",] },
+      "양선": { leader: "천성민", members: ["천성민","정명진","박수림","장소은","김무성","유성언","신현민","김성미","안찬우","김문석","김주민",] },
+      "자비": { leader: "신서연", members: ["신서연","이재현","유현도","장세은","진한영","황현서","김예음","배은지","이희민","이효은","유현빈",] },
+      "새가족팀": { leader: "김준년", members: ["김준년","김현경","김민아","이상협","신의명","신정민",] }
+    };
+
+    function checkGroup() {
+      const name = document.getElementById("nameInput").value.trim();
+      const result = document.getElementById("result");
+
+      result.innerHTML = "";
+
+      // 이름 미입력
+      if (name === "") {
+        result.innerHTML = `
+          <div class="notice fade-in">이름을 입력해주세요.</div>
+        `;
+        return;
+      }
+
+      // 조원 검색
+      for (const groupName in groups) {
+        const group = groups[groupName];
+        if (group.members.includes(name)) {
+          result.innerHTML = `
+            <div class="fade-in">${name}은(는)</div>
+            <div class="leader">
+              ${group.leader} 리더의 ${groupName} 조 조원입니다.
+            </div>
+          `;
+          return;
+        }
+      }
+
+      // 조 없음
+      result.innerHTML = `
+        <div class="notice fade-in">조가 배정되지 않았습니다.</div>
+        <div class="notice fade-in">목장장에게 문의해주세요~</div>
+      `;
+    }
+  </script>
+
+</body>
+</html>
